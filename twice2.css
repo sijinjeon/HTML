@@ -1,0 +1,60 @@
+body {
+    text-align: center;
+    background-color: #ebebeb;
+    width: 70%;
+    color: #333333;
+    font-family: 'Noto Sans KR', sans-serif;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div {
+    text-align: left;
+    width: 800px;
+    background-color: #eeeeee;
+}
+
+section {
+    text-align: left;
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+h1 {
+    text-align: center;
+    color: #ff5fa2;
+    font-size: 24px;
+}
+
+h2 {
+    text-align: center;
+    color: #ff5fa2;
+    font-size: 20px;
+}
+
+
+th{
+    background-color: #ff5fa2;
+    color: #fff;
+}
+
+legend {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.container {
+    text-align: center;
+    width: 800px;
+    background:#fff;
+    border: 1px solid #111111;
+    
+}
+
+.once-font {
+    color: #ff5fa2;
+    font-size: 22px;
+}
