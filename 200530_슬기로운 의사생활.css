@@ -23,3 +23,32 @@
     font-size: 1rem;
     text-align: center;
 }
+
+.video-font {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.fanmeeting-description-font {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 300;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.fanmeeting-font {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    text-align: left;
+}
+
+.footer-font {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 300;
+    font-size: 1rem;
+    text-align: center;
+    color: white;
+}
