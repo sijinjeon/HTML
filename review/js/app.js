@@ -61,7 +61,6 @@ async function generateReview() {
   loading.style.display = 'block';
   content.style.display = 'none';
   error.style.display = 'none';
-  updateLoadingText('리뷰를 생성하고 있어요...');
   refreshIcon.style.transition = 'transform 0.5s';
   refreshIcon.style.transform = 'rotate(360deg)';
   setTimeout(() => {
