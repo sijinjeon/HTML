@@ -6,6 +6,8 @@
 <!-- AUTO-GENERATED: CHANGELOG_START -->
 ## 2026-03-25
 
+- [`a52ea6c`] 업데이트: scripts for changelog and readme automation
+- [`acf3b3a`] 문서: CHANGELOG.md 자동 업데이트
 - [`2e5eedb`] 문서: 자동 업데이트 README.md
 - [`abe7147`] 문서: 자동 업데이트 CHANGELOG.md
 - [`d9acc90`] 문서: 자동 업데이트 CHANGELOG.md
