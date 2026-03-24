@@ -1,16 +1,35 @@
 // === Gemini API 리뷰 생성 ===
 
-const REVIEW_PROMPT = `당신은 "${CONFIG.RESTAURANT.name}"(${CONFIG.RESTAURANT.address}, ${CONFIG.RESTAURANT.region}역 근처)을 방문한 일반 고객입니다.
-네이버 지도 영수증 후기를 작성해주세요.
+let promptTemplateText = null;
 
-조건:
-- 350자 이내
-- 자연스러운 한국어, 캐주얼한 톤 (20~40대가 쓰는 느낌)
-- 메뉴 중 하나 이상 자연스럽게 언급: ${CONFIG.RESTAURANT.keywords.join(', ')}
-- 맛, 양, 가격, 서비스, 분위기 중 2~3가지 자연스럽게 포함
-- 다양한 상황 중 하나를 랜덤으로 설정 (혼밥, 가족모임, 직장동료, 친구, 데이트, 재방문 등)
-- 이모티콘이나 ㅎㅎ, ㅠㅠ 같은 표현 자연스럽게 사용 가능
-- 후기 본문만 출력 (따옴표, 제목, 설명, 앞뒤 부연 없이 오직 후기 텍스트만)`;
+async function loadPromptTemplate() {
+  if (promptTemplateText) return promptTemplateText;
+  const path = CONFIG.PROMPT_TEMPLATE_PATH || 'prompts/review-prompt.md';
+  const res = await fetch(path);
+  if (!res.ok) {
+    throw new Error(`프롬프트 파일을 불러오지 못했습니다: ${path} (${res.status})`);
+  }
+  promptTemplateText = await res.text();
+  return promptTemplateText;
+}
+
+// 네이버 키워드 중 랜덤 3~5개 선택
+function pickRandomKeywords(count) {
+  const list = CONFIG.RESTAURANT.keywords || [];
+  const shuffled = [...list].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, count);
+}
+
+function buildPromptFromTemplate(template) {
+  const selectedKeywords = pickRandomKeywords(3 + Math.floor(Math.random() * 3)); // 3~5개
+  const keywordsList = selectedKeywords.map((k) => `- ${k}`).join('\n');
+  return template
+    .replace(/\{\{RESTAURANT_NAME\}\}/g, CONFIG.RESTAURANT.name)
+    .replace(/\{\{RESTAURANT_ADDRESS\}\}/g, CONFIG.RESTAURANT.address)
+    .replace(/\{\{STATION_AREA\}\}/g, CONFIG.RESTAURANT.stationArea)
+    .replace(/\{\{MENUS\}\}/g, CONFIG.RESTAURANT.menus.join(', '))
+    .replace(/\{\{KEYWORDS_LIST\}\}/g, keywordsList);
+}
 
 let currentReview = '';
 
@@ -32,13 +51,16 @@ async function generateReview() {
   }, 500);
 
   try {
+    const template = await loadPromptTemplate();
+    const reviewPrompt = buildPromptFromTemplate(template);
+
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${CONFIG.GEMINI_API_KEY}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          contents: [{ parts: [{ text: REVIEW_PROMPT }] }],
+          contents: [{ parts: [{ text: reviewPrompt }] }],
           generationConfig: {
             temperature: 1.2,
             maxOutputTokens: 500,
