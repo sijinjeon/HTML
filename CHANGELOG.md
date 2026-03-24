@@ -6,6 +6,7 @@
 <!-- AUTO-GENERATED: CHANGELOG_START -->
 ## 2026-03-25
 
+- [`d9acc90`] docs: auto-update CHANGELOG.md
 - [`4ff42d9`] Add GitHub Actions deploy workflow and update review generator
 - [`f5c4cff`] Merge pull request #1 from sijinjeon/claude/plan-restaurant-reviews-R1ppv
 
