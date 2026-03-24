@@ -31,43 +31,22 @@ function buildPromptFromTemplate(template) {
     .replace(/\{\{KEYWORDS_LIST\}\}/g, keywordsList);
 }
 
-// 429 대기 후 단일 요청
+// API 단일 요청 (재시도 없음 — 할당량 절약)
 async function callGeminiAPI(prompt) {
-  const model = 'gemini-2.0-flash';
-  const maxRetries = 3;
-
-  for (let attempt = 0; attempt < maxRetries; attempt++) {
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${CONFIG.GEMINI_API_KEY}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: {
-            temperature: 1.2,
-            maxOutputTokens: 500,
-          },
-        }),
-      }
-    );
-
-    if (response.ok) return response;
-
-    if (response.status === 429 && attempt < maxRetries - 1) {
-      const waitSec = (attempt + 1) * 5;
-      updateLoadingText(`요청이 많아요. ${waitSec}초 후 재시도...`);
-      await new Promise(r => setTimeout(r, waitSec * 1000));
-      continue;
+  return fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${CONFIG.GEMINI_API_KEY}`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: {
+          temperature: 1.2,
+          maxOutputTokens: 500,
+        },
+      }),
     }
-
-    return response; // 429가 아닌 에러 또는 마지막 시도
-  }
-}
-
-function updateLoadingText(msg) {
-  const el = document.querySelector('.loading-text');
-  if (el) el.textContent = msg;
+  );
 }
 
 let currentReview = '';
@@ -97,6 +76,9 @@ async function generateReview() {
     const response = await callGeminiAPI(reviewPrompt);
 
     if (!response.ok) {
+      if (response.status === 429) {
+        throw new Error('잠시 후 다시 시도해주세요 (1분 뒤)');
+      }
       const errBody = await response.json().catch(() => ({}));
       const msg = errBody?.error?.message || `HTTP ${response.status}`;
       throw new Error(`API 오류: ${msg}`);
