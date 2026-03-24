@@ -6,6 +6,8 @@
 <!-- AUTO-GENERATED: CHANGELOG_START -->
 ## 2026-03-25
 
+- [`c8b7993`] 제거: retry logic to prevent quota waste, 1 request per action
+- [`d646370`] 문서: CHANGELOG.md 자동 업데이트
 - [`736b580`] Clean up auto-generated README and remove unused script
 - [`c312811`] 문서: CHANGELOG.md 자동 업데이트
 - [`f91da46`] Simplify retry logic and show wait message on 429 errors
