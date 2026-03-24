@@ -1,0 +1,185 @@
+/* === 기본 설정 === */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+  -webkit-text-size-adjust: 100%;
+}
+
+.container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 24px 20px 40px;
+}
+
+/* === 헤더 === */
+header {
+  margin-bottom: 24px;
+  padding-top: 16px;
+}
+
+.restaurant-name {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 2px;
+}
+
+.restaurant-sub {
+  font-size: 15px;
+  color: #888;
+  margin-bottom: 0;
+}
+
+/* === 리뷰 카드 === */
+.review-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.review-label {
+  font-size: 12px;
+  color: #aaa;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.review-text {
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.review-content {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #333;
+  word-break: keep-all;
+}
+
+/* === 로딩 === */
+.loading-spinner {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.loading-text {
+  font-size: 14px;
+  color: #999;
+  margin-top: 12px;
+}
+
+/* === 에러 === */
+.error-message {
+  text-align: center;
+  color: #999;
+  padding: 20px 0;
+}
+
+.error-message p {
+  margin-bottom: 12px;
+}
+
+/* === 버튼 영역 === */
+.btn-area {
+  margin-bottom: 24px;
+}
+
+.btn-area .btn {
+  margin-bottom: 10px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 14px 20px;
+  min-height: 52px;
+  transition: all 0.15s ease;
+}
+
+.btn-area .btn:active {
+  transform: scale(0.98);
+}
+
+#btn-refresh {
+  background: #fff;
+  border: 1.5px solid #ddd;
+  color: #555;
+}
+
+#btn-refresh:hover,
+#btn-refresh:active {
+  background: #f0f0f0;
+}
+
+#refresh-icon {
+  display: inline-block;
+  font-size: 18px;
+}
+
+#btn-copy {
+  background: #1a1a1a;
+  border: none;
+  color: #fff;
+}
+
+#btn-copy:hover,
+#btn-copy:active {
+  background: #333;
+}
+
+/* 네이버 그린 버튼 */
+.btn-naver {
+  background-color: #03C75A;
+  border: none;
+  color: #fff !important;
+  text-decoration: none !important;
+}
+
+.btn-naver:hover,
+.btn-naver:active {
+  background-color: #02b351;
+  color: #fff !important;
+}
+
+/* 복사 피드백 */
+.copy-feedback {
+  text-align: center;
+  color: #03C75A;
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: -4px;
+  margin-bottom: 10px;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === 안내 === */
+.guide-text {
+  font-size: 13px;
+  color: #aaa;
+  line-height: 1.6;
+}
+
+/* === 리뷰 페이드인 === */
+.review-content.fade-in {
+  animation: reviewFadeIn 0.4s ease;
+}
+
+@keyframes reviewFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
