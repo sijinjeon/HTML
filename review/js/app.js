@@ -94,6 +94,7 @@ async function generateReview() {
     console.error('리뷰 생성 실패:', err);
     loading.style.display = 'none';
     error.style.display = 'block';
+    error.querySelector('p').textContent = `리뷰 생성에 실패했어요. (${err.message})`;
   }
 }
 
