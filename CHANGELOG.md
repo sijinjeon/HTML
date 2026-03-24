@@ -6,6 +6,8 @@
 <!-- AUTO-GENERATED: CHANGELOG_START -->
 ## 2026-03-25
 
+- [`f91da46`] Simplify retry logic and show wait message on 429 errors
+- [`e08f983`] 문서: CHANGELOG.md 자동 업데이트
 - [`37e59e6`] 추가: retry logic and fallback model for 429 rate limit errors
 - [`ca3dd1b`] 문서: CHANGELOG.md 자동 업데이트
 - [`128bd0b`] 추가: error detail display for debugging API failures
