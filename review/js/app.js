@@ -54,27 +54,44 @@ async function generateReview() {
     const template = await loadPromptTemplate();
     const reviewPrompt = buildPromptFromTemplate(template);
 
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${CONFIG.GEMINI_API_KEY}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: reviewPrompt }] }],
-          generationConfig: {
-            temperature: 1.2,
-            maxOutputTokens: 500,
-          },
-        }),
+    const models = ['gemini-2.0-flash', 'gemini-1.5-flash'];
+    let response, data, reviewText;
+
+    for (const model of models) {
+      const maxRetries = 3;
+      for (let attempt = 0; attempt < maxRetries; attempt++) {
+        response = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${CONFIG.GEMINI_API_KEY}`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: reviewPrompt }] }],
+              generationConfig: {
+                temperature: 1.2,
+                maxOutputTokens: 500,
+              },
+            }),
+          }
+        );
+
+        if (response.ok) break;
+        if (response.status === 429 && attempt < maxRetries - 1) {
+          // 429일 때 잠시 대기 후 재시도
+          await new Promise(r => setTimeout(r, (attempt + 1) * 2000));
+          continue;
+        }
       }
-    );
+
+      if (response.ok) break;
+    }
 
     if (!response.ok) {
       throw new Error(`API 오류: ${response.status}`);
     }
 
-    const data = await response.json();
-    const reviewText = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+    data = await response.json();
+    reviewText = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
 
     if (!reviewText) {
       throw new Error('리뷰 텍스트를 받지 못했습니다.');
