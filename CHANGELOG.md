@@ -6,6 +6,8 @@
 <!-- AUTO-GENERATED: CHANGELOG_START -->
 ## 2026-03-25
 
+- [`1cba369`] Trigger deploy with new API key
+- [`1dee236`] 문서: CHANGELOG.md 자동 업데이트
 - [`090bfd5`] Trigger deploy
 - [`0e0dca3`] 문서: CHANGELOG.md 자동 업데이트
 - [`7c5cfc6`] 제거: undefined updateLoadingText call
