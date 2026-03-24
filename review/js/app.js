@@ -31,6 +31,45 @@ function buildPromptFromTemplate(template) {
     .replace(/\{\{KEYWORDS_LIST\}\}/g, keywordsList);
 }
 
+// 429 대기 후 단일 요청
+async function callGeminiAPI(prompt) {
+  const model = 'gemini-2.0-flash';
+  const maxRetries = 3;
+
+  for (let attempt = 0; attempt < maxRetries; attempt++) {
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${CONFIG.GEMINI_API_KEY}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: {
+            temperature: 1.2,
+            maxOutputTokens: 500,
+          },
+        }),
+      }
+    );
+
+    if (response.ok) return response;
+
+    if (response.status === 429 && attempt < maxRetries - 1) {
+      const waitSec = (attempt + 1) * 5;
+      updateLoadingText(`요청이 많아요. ${waitSec}초 후 재시도...`);
+      await new Promise(r => setTimeout(r, waitSec * 1000));
+      continue;
+    }
+
+    return response; // 429가 아닌 에러 또는 마지막 시도
+  }
+}
+
+function updateLoadingText(msg) {
+  const el = document.querySelector('.loading-text');
+  if (el) el.textContent = msg;
+}
+
 let currentReview = '';
 
 async function generateReview() {
@@ -43,6 +82,7 @@ async function generateReview() {
   loading.style.display = 'block';
   content.style.display = 'none';
   error.style.display = 'none';
+  updateLoadingText('리뷰를 생성하고 있어요...');
   refreshIcon.style.transition = 'transform 0.5s';
   refreshIcon.style.transform = 'rotate(360deg)';
   setTimeout(() => {
@@ -54,44 +94,16 @@ async function generateReview() {
     const template = await loadPromptTemplate();
     const reviewPrompt = buildPromptFromTemplate(template);
 
-    const models = ['gemini-2.0-flash', 'gemini-1.5-flash'];
-    let response, data, reviewText;
-
-    for (const model of models) {
-      const maxRetries = 3;
-      for (let attempt = 0; attempt < maxRetries; attempt++) {
-        response = await fetch(
-          `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${CONFIG.GEMINI_API_KEY}`,
-          {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              contents: [{ parts: [{ text: reviewPrompt }] }],
-              generationConfig: {
-                temperature: 1.2,
-                maxOutputTokens: 500,
-              },
-            }),
-          }
-        );
-
-        if (response.ok) break;
-        if (response.status === 429 && attempt < maxRetries - 1) {
-          // 429일 때 잠시 대기 후 재시도
-          await new Promise(r => setTimeout(r, (attempt + 1) * 2000));
-          continue;
-        }
-      }
-
-      if (response.ok) break;
-    }
+    const response = await callGeminiAPI(reviewPrompt);
 
     if (!response.ok) {
-      throw new Error(`API 오류: ${response.status}`);
+      const errBody = await response.json().catch(() => ({}));
+      const msg = errBody?.error?.message || `HTTP ${response.status}`;
+      throw new Error(`API 오류: ${msg}`);
     }
 
-    data = await response.json();
-    reviewText = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+    const data = await response.json();
+    const reviewText = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
 
     if (!reviewText) {
       throw new Error('리뷰 텍스트를 받지 못했습니다.');
