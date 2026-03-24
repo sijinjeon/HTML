@@ -6,6 +6,10 @@
 <!-- AUTO-GENERATED: CHANGELOG_START -->
 ## 2026-03-25
 
+- [`128bd0b`] 추가: error detail display for debugging API failures
+- [`603aac3`] 문서: 자동 업데이트 README.md
+- [`fc59821`] 문서: 자동 업데이트 README.md
+- [`26c2f05`] 문서: CHANGELOG.md 자동 업데이트
 - [`a52ea6c`] 업데이트: scripts for changelog and readme automation
 - [`acf3b3a`] 문서: CHANGELOG.md 자동 업데이트
 - [`2e5eedb`] 문서: 자동 업데이트 README.md
