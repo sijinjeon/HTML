@@ -6,6 +6,8 @@
 <!-- AUTO-GENERATED: CHANGELOG_START -->
 ## 2026-03-25
 
+- [`090bfd5`] Trigger deploy
+- [`0e0dca3`] 문서: CHANGELOG.md 자동 업데이트
 - [`7c5cfc6`] 제거: undefined updateLoadingText call
 - [`6990be9`] 문서: CHANGELOG.md 자동 업데이트
 - [`c8b7993`] 제거: retry logic to prevent quota waste, 1 request per action
