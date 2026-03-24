@@ -37,6 +37,7 @@ HTML/CSS/JS 학습 및 실습 프로젝트입니다.
 <!-- AUTO-GENERATED: RECENT_COMMITS_START -->
 | 해시 | 메시지 |
 |------|--------|
+| fc59821 | 문서: 자동 업데이트 README.md |
 | 26c2f05 | 문서: CHANGELOG.md 자동 업데이트 |
 | a52ea6c | 업데이트: scripts for changelog and readme automation |
 | acf3b3a | 문서: CHANGELOG.md 자동 업데이트 |
@@ -46,7 +47,6 @@ HTML/CSS/JS 학습 및 실습 프로젝트입니다.
 | 4ff42d9 | 추가: GitHub Actions deploy workflow and update review generator |
 | f5c4cff | 풀 리퀘스트 병합 #1 from sijinjeon/claude/plan-restaurant-reviews-R1ppv |
 | f112774 | 추가: restaurant review generator page for 강설옥 설렁탕 |
-| 5009d9a | ver1 |
 <!-- AUTO-GENERATED: RECENT_COMMITS_END -->
 
 ---
