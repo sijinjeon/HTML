@@ -115,6 +115,43 @@ function updateQuotaUI() {
   }
 }
 
+let progressTimer = null;
+
+function startProgress() {
+  const numEl = document.getElementById('progress-number');
+  const barEl = document.getElementById('progress-bar');
+  let current = 0;
+  numEl.textContent = '0%';
+  barEl.style.width = '0%';
+
+  progressTimer = setInterval(() => {
+    const remaining = 99 - current;
+    const step = Math.max(0.3, remaining * 0.04 + Math.random() * 0.8);
+    current = Math.min(current + step, 99);
+    const rounded = Math.floor(current);
+    numEl.textContent = `${rounded}%`;
+    barEl.style.width = `${rounded}%`;
+
+    if (current >= 99) clearInterval(progressTimer);
+  }, 150);
+}
+
+function finishProgress() {
+  if (progressTimer) clearInterval(progressTimer);
+  const numEl = document.getElementById('progress-number');
+  const barEl = document.getElementById('progress-bar');
+  numEl.textContent = '100%';
+  barEl.style.width = '100%';
+}
+
+function resetProgress() {
+  if (progressTimer) clearInterval(progressTimer);
+  const numEl = document.getElementById('progress-number');
+  const barEl = document.getElementById('progress-bar');
+  if (numEl) numEl.textContent = '0%';
+  if (barEl) barEl.style.width = '0%';
+}
+
 async function generateReview() {
   if (sessionCount >= SESSION_MAX) {
     updateQuotaUI();
@@ -129,7 +166,7 @@ async function generateReview() {
   const error = document.getElementById('error-message');
   const refreshIcon = document.getElementById('refresh-icon');
 
-  loading.style.display = 'block';
+  loading.style.display = 'flex';
   content.style.display = 'none';
   error.style.display = 'none';
   refreshIcon.style.transition = 'transform 0.5s';
@@ -138,6 +175,8 @@ async function generateReview() {
     refreshIcon.style.transition = 'none';
     refreshIcon.style.transform = 'rotate(0deg)';
   }, 500);
+
+  startProgress();
 
   try {
     const template = await loadPromptTemplate();
@@ -162,6 +201,9 @@ async function generateReview() {
 
     currentReview = sanitizeReviewText(reviewText);
 
+    finishProgress();
+    await new Promise(r => setTimeout(r, 350));
+
     loading.style.display = 'none';
     content.textContent = currentReview;
     content.style.display = 'block';
@@ -170,6 +212,7 @@ async function generateReview() {
     content.classList.add('fade-in');
   } catch (err) {
     console.error('리뷰 생성 실패:', err);
+    resetProgress();
     loading.style.display = 'none';
     error.style.display = 'block';
     error.querySelector('p').textContent = `리뷰 생성에 실패했어요. (${err.message})`;

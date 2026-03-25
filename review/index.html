@@ -30,11 +30,12 @@
     <div class="review-card">
       <p class="review-label">AI가 작성한 리뷰</p>
       <div id="review-text" class="review-text">
-        <div class="loading-spinner" id="loading">
-          <div class="spinner-border text-secondary" role="status">
-            <span class="sr-only">로딩중...</span>
+        <div class="loading-progress" id="loading">
+          <div class="progress-number" id="progress-number">0%</div>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar-fill" id="progress-bar"></div>
           </div>
-          <p class="loading-text">리뷰를 생성하고 있습니다<br>잠시만 기다려주세요</p>
+          <p class="loading-text">리뷰를 생성하고 있습니다</p>
         </div>
         <div id="review-content" class="review-content" style="display:none;"></div>
         <div id="error-message" class="error-message" style="display:none;">

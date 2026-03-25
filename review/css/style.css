@@ -102,7 +102,7 @@ header {
 }
 
 /* 로딩/에러일 때만 중앙 정렬 */
-.loading-spinner,
+.loading-progress,
 .error-message {
   display: flex;
   flex-direction: column;
@@ -121,17 +121,33 @@ header {
   letter-spacing: -0.2px;
 }
 
-/* === 로딩 === */
-.loading-spinner {
-  text-align: center;
+/* === 로딩 프로그레스 === */
+.progress-number {
+  font-size: 32px;
+  font-weight: 700;
+  color: #2563eb;
+  letter-spacing: -1px;
+  margin-bottom: 12px;
 }
 
-.loading-spinner .spinner-border {
-  animation: spinner-border 0.25s linear infinite;
+.progress-bar-wrap {
+  width: 180px;
+  height: 4px;
+  background: #e9ecef;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  width: 0%;
+  height: 100%;
+  background: #2563eb;
+  border-radius: 2px;
+  transition: width 0.3s ease-out;
 }
 
 .loading-text {
-  font-size: 14px;
+  font-size: 13px;
   color: #999;
   margin-top: 12px;
   line-height: 1.5;
