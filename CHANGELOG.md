@@ -6,7 +6,12 @@
 <!-- AUTO-GENERATED: CHANGELOG_START -->
 ## 2026/03/25
 
+- [`700d02a`] 2026/03/25 11:33 추가: favicon
+- [`4659f65`] 2026/03/25 11:33 Merge branch 'master' of https://github.com/sijinjeon/HTML
+- [`d58418f`] 2026/03/25 11:32 문서: CHANGELOG.md 자동 업데이트
 - [`0e6f42f`] 2026/03/25 11:32 Improve mobile readability: larger text, better spacing, small device support
+- [`36d96b0`] 2026/03/25 11:31 favicon
+- [`cfbb555`] 2026/03/25 11:30 favicon
 - [`4278e21`] 2026/03/25 11:30 문서: CHANGELOG.md 자동 업데이트
 - [`b4f3e97`] 2026/03/25 11:30 Increase review length to 200-400 chars and enlarge review card
 - [`fc070f6`] 2026/03/25 11:26 문서: CHANGELOG.md 자동 업데이트
