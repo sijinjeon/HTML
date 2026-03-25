@@ -6,6 +6,8 @@
 <!-- AUTO-GENERATED: CHANGELOG_START -->
 ## 2026/03/25
 
+- [`86d39b7`] 2026/03/25 11:26 업데이트: Gemini model from 2.0-flash to 2.5-flash
+- [`5704a3d`] 2026/03/25 11:16 문서: CHANGELOG.md 자동 업데이트
 - [`bd238ac`] 2026/03/25 11:15 문서: CHANGELOG.md 자동 업데이트
 - [`02cc7f5`] 2026/03/25 11:11 문서: CHANGELOG.md 자동 업데이트
 - [`d02de84`] 2026/03/25 11:11 Redeploy
