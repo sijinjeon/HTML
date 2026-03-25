@@ -6,6 +6,7 @@
 <!-- AUTO-GENERATED: CHANGELOG_START -->
 ## 2026/03/25
 
+- [`a5dd801`] 2026/03/25 12:16 수정: maxOutputTokens 500→2048로 증가, 최소 글자수 범위 상향
 - [`829eef3`] 2026/03/25 12:10 정리: CHANGELOG 스크립트 간소화, pending 엔트리 로직 제거
 - [`b97fc39`] 2026/03/25 12:09 변경: CHANGELOG 자동 갱신을 post-commit에서 pre-commit으로 전환
 - [`da54c70`] 2026/03/25 12:03 추가: 페르소나 기반 리뷰 생성 시스템 및 UI 개선

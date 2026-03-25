@@ -69,7 +69,6 @@ function buildPromptFromTemplate(template) {
     .replace(/\{\{KEYWORDS_LIST\}\}/g, keywordsList);
 }
 
-// API 단일 요청 (재시도 없음 — 할당량 절약)
 async function callGeminiAPI(prompt) {
   return fetch(
     `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${CONFIG.GEMINI_API_KEY}`,
@@ -80,7 +79,7 @@ async function callGeminiAPI(prompt) {
         contents: [{ parts: [{ text: prompt }] }],
         generationConfig: {
           temperature: 1.2,
-          maxOutputTokens: 2048,
+          maxOutputTokens: 8192,
         },
       }),
     }
@@ -88,8 +87,8 @@ async function callGeminiAPI(prompt) {
 }
 
 let currentReview = '';
+const MAX_RETRY = 2;
 
-/** API 출력에서 **·유니코드 이모지 제거 (프롬프트 위반 보정) */
 function sanitizeReviewText(text) {
   if (!text) return text;
   let s = text.replace(/\*{1,2}/g, '');
@@ -98,13 +97,24 @@ function sanitizeReviewText(text) {
   return s.trim();
 }
 
+function isReviewTruncated(data) {
+  const candidate = data.candidates?.[0];
+  if (!candidate) return true;
+  if (candidate.finishReason === 'MAX_TOKENS') return true;
+  const text = candidate.content?.parts?.[0]?.text?.trim() || '';
+  if (text.length < 80) return true;
+  const lastChar = text.slice(-1);
+  const endsClean = /[.!?요다음함됨네~ㅎㅋ)"]/.test(lastChar);
+  if (!endsClean) return true;
+  return false;
+}
+
 async function generateReview() {
   const loading = document.getElementById('loading');
   const content = document.getElementById('review-content');
   const error = document.getElementById('error-message');
   const refreshIcon = document.getElementById('refresh-icon');
 
-  // 로딩 상태
   loading.style.display = 'block';
   content.style.display = 'none';
   error.style.display = 'none';
@@ -117,21 +127,34 @@ async function generateReview() {
 
   try {
     const template = await loadPromptTemplate();
-    const reviewPrompt = buildPromptFromTemplate(template);
+    let reviewText = null;
 
-    const response = await callGeminiAPI(reviewPrompt);
+    for (let attempt = 0; attempt <= MAX_RETRY; attempt++) {
+      const reviewPrompt = buildPromptFromTemplate(template);
+      const response = await callGeminiAPI(reviewPrompt);
 
-    if (!response.ok) {
-      if (response.status === 429) {
-        throw new Error('잠시 후 다시 시도해주세요 (1분 뒤)');
+      if (!response.ok) {
+        if (response.status === 429) {
+          throw new Error('잠시 후 다시 시도해주세요 (1분 뒤)');
+        }
+        const errBody = await response.json().catch(() => ({}));
+        const msg = errBody?.error?.message || `HTTP ${response.status}`;
+        throw new Error(`API 오류: ${msg}`);
       }
-      const errBody = await response.json().catch(() => ({}));
-      const msg = errBody?.error?.message || `HTTP ${response.status}`;
-      throw new Error(`API 오류: ${msg}`);
-    }
 
-    const data = await response.json();
-    const reviewText = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+      const data = await response.json();
+
+      if (!isReviewTruncated(data)) {
+        reviewText = data.candidates[0].content.parts[0].text.trim();
+        break;
+      }
+
+      console.warn(`리뷰 잘림 감지 (시도 ${attempt + 1}/${MAX_RETRY + 1}), 재생성...`);
+
+      if (attempt === MAX_RETRY) {
+        reviewText = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || null;
+      }
+    }
 
     if (!reviewText) {
       throw new Error('리뷰 텍스트를 받지 못했습니다.');
@@ -139,12 +162,10 @@ async function generateReview() {
 
     currentReview = sanitizeReviewText(reviewText);
 
-    // 리뷰 표시
     loading.style.display = 'none';
     content.textContent = currentReview;
     content.style.display = 'block';
     content.classList.remove('fade-in');
-    // 리플로우 트리거 후 애니메이션
     void content.offsetWidth;
     content.classList.add('fade-in');
   } catch (err) {
