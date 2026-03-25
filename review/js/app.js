@@ -34,7 +34,7 @@ function buildPromptFromTemplate(template) {
 // API 단일 요청 (재시도 없음 — 할당량 절약)
 async function callGeminiAPI(prompt) {
   return fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${CONFIG.GEMINI_API_KEY}`,
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${CONFIG.GEMINI_API_KEY}`,
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
