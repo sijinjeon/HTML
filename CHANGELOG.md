@@ -6,6 +6,7 @@
 <!-- AUTO-GENERATED: CHANGELOG_START -->
 ## 2026/03/25
 
+- [`3f82812`] 2026/03/25 12:22 수정: 리뷰 잘림 방지 — maxOutputTokens 8192 + 잘림 감지 자동 재생성
 - [`a5dd801`] 2026/03/25 12:16 수정: maxOutputTokens 500→2048로 증가, 최소 글자수 범위 상향
 - [`829eef3`] 2026/03/25 12:10 정리: CHANGELOG 스크립트 간소화, pending 엔트리 로직 제거
 - [`b97fc39`] 2026/03/25 12:09 변경: CHANGELOG 자동 갱신을 post-commit에서 pre-commit으로 전환

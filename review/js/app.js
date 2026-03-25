@@ -87,7 +87,8 @@ async function callGeminiAPI(prompt) {
 }
 
 let currentReview = '';
-const MAX_RETRY = 2;
+const SESSION_MAX = 3;
+let sessionCount = 0;
 
 function sanitizeReviewText(text) {
   if (!text) return text;
@@ -97,19 +98,32 @@ function sanitizeReviewText(text) {
   return s.trim();
 }
 
-function isReviewTruncated(data) {
-  const candidate = data.candidates?.[0];
-  if (!candidate) return true;
-  if (candidate.finishReason === 'MAX_TOKENS') return true;
-  const text = candidate.content?.parts?.[0]?.text?.trim() || '';
-  if (text.length < 80) return true;
-  const lastChar = text.slice(-1);
-  const endsClean = /[.!?요다음함됨네~ㅎㅋ)"]/.test(lastChar);
-  if (!endsClean) return true;
-  return false;
+function updateQuotaUI() {
+  const remaining = SESSION_MAX - sessionCount;
+  const quotaEl = document.getElementById('quota-text');
+  const refreshBtn = document.getElementById('btn-refresh');
+
+  if (remaining <= 0) {
+    quotaEl.textContent = '리뷰 생성 횟수를 모두 사용했습니다';
+    quotaEl.style.color = '#e74c3c';
+    refreshBtn.disabled = true;
+    refreshBtn.style.opacity = '0.4';
+    refreshBtn.style.cursor = 'not-allowed';
+  } else {
+    quotaEl.textContent = `남은 횟수: ${remaining}/${SESSION_MAX}`;
+    quotaEl.style.color = '#999';
+  }
 }
 
 async function generateReview() {
+  if (sessionCount >= SESSION_MAX) {
+    updateQuotaUI();
+    return;
+  }
+
+  sessionCount++;
+  updateQuotaUI();
+
   const loading = document.getElementById('loading');
   const content = document.getElementById('review-content');
   const error = document.getElementById('error-message');
@@ -127,34 +141,20 @@ async function generateReview() {
 
   try {
     const template = await loadPromptTemplate();
-    let reviewText = null;
+    const reviewPrompt = buildPromptFromTemplate(template);
+    const response = await callGeminiAPI(reviewPrompt);
 
-    for (let attempt = 0; attempt <= MAX_RETRY; attempt++) {
-      const reviewPrompt = buildPromptFromTemplate(template);
-      const response = await callGeminiAPI(reviewPrompt);
-
-      if (!response.ok) {
-        if (response.status === 429) {
-          throw new Error('잠시 후 다시 시도해주세요 (1분 뒤)');
-        }
-        const errBody = await response.json().catch(() => ({}));
-        const msg = errBody?.error?.message || `HTTP ${response.status}`;
-        throw new Error(`API 오류: ${msg}`);
+    if (!response.ok) {
+      if (response.status === 429) {
+        throw new Error('잠시 후 다시 시도해주세요 (1분 뒤)');
       }
-
-      const data = await response.json();
-
-      if (!isReviewTruncated(data)) {
-        reviewText = data.candidates[0].content.parts[0].text.trim();
-        break;
-      }
-
-      console.warn(`리뷰 잘림 감지 (시도 ${attempt + 1}/${MAX_RETRY + 1}), 재생성...`);
-
-      if (attempt === MAX_RETRY) {
-        reviewText = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || null;
-      }
+      const errBody = await response.json().catch(() => ({}));
+      const msg = errBody?.error?.message || `HTTP ${response.status}`;
+      throw new Error(`API 오류: ${msg}`);
     }
+
+    const data = await response.json();
+    const reviewText = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
 
     if (!reviewText) {
       throw new Error('리뷰 텍스트를 받지 못했습니다.');
