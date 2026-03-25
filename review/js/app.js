@@ -30,10 +30,10 @@ const PERSONAS = [
 ];
 
 const CHAR_RANGES = [
-  { min: 100, max: 160 },
   { min: 150, max: 220 },
   { min: 200, max: 280 },
   { min: 250, max: 330 },
+  { min: 280, max: 380 },
   { min: 300, max: 400 },
 ];
 
@@ -80,7 +80,7 @@ async function callGeminiAPI(prompt) {
         contents: [{ parts: [{ text: prompt }] }],
         generationConfig: {
           temperature: 1.2,
-          maxOutputTokens: 500,
+          maxOutputTokens: 2048,
         },
       }),
     }
