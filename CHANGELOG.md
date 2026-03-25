@@ -6,6 +6,8 @@
 <!-- AUTO-GENERATED: CHANGELOG_START -->
 ## 2026/03/25
 
+- [`b4f3e97`] 2026/03/25 11:30 Increase review length to 200-400 chars and enlarge review card
+- [`fc070f6`] 2026/03/25 11:26 문서: CHANGELOG.md 자동 업데이트
 - [`86d39b7`] 2026/03/25 11:26 업데이트: Gemini model from 2.0-flash to 2.5-flash
 - [`5704a3d`] 2026/03/25 11:16 문서: CHANGELOG.md 자동 업데이트
 - [`bd238ac`] 2026/03/25 11:15 문서: CHANGELOG.md 자동 업데이트
