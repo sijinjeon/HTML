@@ -6,6 +6,8 @@
 <!-- AUTO-GENERATED: CHANGELOG_START -->
 ## 2026-03-25
 
+- [`2752874`] Trigger deploy with updated secret
+- [`78c166b`] 문서: CHANGELOG.md 자동 업데이트
 - [`513d367`] Trigger deploy with new project API key
 - [`b4ca9bb`] 문서: CHANGELOG.md 자동 업데이트
 - [`1cba369`] Trigger deploy with new API key
