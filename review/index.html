@@ -18,14 +18,13 @@
     </header>
 
     <!-- 이용 순서 안내 (리뷰 영역 위) -->
-    <section class="guide-callout" aria-labelledby="guide-callout-heading">
-      <h2 id="guide-callout-heading" class="guide-callout-title">리뷰 올리는 순서</h2>
-      <ol class="guide-steps">
-        <li>리뷰 복사하기</li>
-        <li>네이버 지도에 리뷰 쓰기</li>
-        <li>붙여넣기</li>
-      </ol>
-    </section>
+    <div class="guide-callout" role="note">
+      <span class="guide-step"><span class="step-num">1</span>리뷰 복사</span>
+      <span class="guide-arrow">&rarr;</span>
+      <span class="guide-step"><span class="step-num">2</span>네이버 리뷰 쓰기</span>
+      <span class="guide-arrow">&rarr;</span>
+      <span class="guide-step"><span class="step-num">3</span>붙여넣기</span>
+    </div>
 
     <!-- 리뷰 카드 -->
     <div class="review-card">
@@ -51,15 +50,18 @@
         <span id="refresh-icon">&#x21bb;</span> 다른 리뷰 보기
       </button>
 
-      <button id="btn-copy" class="btn btn-dark btn-block btn-lg" onclick="copyReview()">
-        리뷰 복사하기
-      </button>
+      <div class="btn-row">
+        <button id="btn-copy" class="btn btn-dark btn-lg" onclick="copyReview()">
+          리뷰 복사하기
+        </button>
+        <a id="btn-naver" class="btn btn-naver btn-lg" href="https://m.place.naver.com/restaurant/2049894629/review/visitor" target="_blank" rel="noopener">
+          네이버에 리뷰 쓰기
+        </a>
+      </div>
       <div id="copy-feedback" class="copy-feedback" style="display:none;">복사되었습니다!</div>
-
-      <a id="btn-naver" class="btn btn-naver btn-block btn-lg" href="https://m.place.naver.com/restaurant/2049894629/review/visitor" target="_blank" rel="noopener">
-        네이버 지도에 리뷰 쓰기
-      </a>
     </div>
+
+    <p class="photo-hint">음식 사진 📸 만 예쁘게 찍어주시면 끝!<br>영상 🎬 이면 더 좋아요. 고기 맛있게 넣어드릴게요 &#x1F60B;</p>
   </div>
 
   <script src="js/config.js"></script>

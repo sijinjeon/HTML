@@ -17,9 +17,9 @@ fi
 MARKER_START="<!-- AUTO-GENERATED: CHANGELOG_START -->"
 MARKER_END="<!-- AUTO-GENERATED: CHANGELOG_END -->"
 
-# 날짜별로 그룹핑된 커밋 로그를 임시 파일에 저장
+# 날짜별로 그룹핑된 커밋 로그를 임시 파일에 저장 (KST = UTC+9)
 CONTENT_FILE=$(mktemp)
-git log --format="%ad|%h|%s" --date=short | awk -F'|' '
+TZ="Asia/Seoul" git log --format="%ad|%h|%s" --date=format:"%Y/%m/%d %H:%M" | awk -F'|' '
 function translate(msg) {
   # 영어 커밋 접두사를 한글로 변환
   gsub(/^[ \t]+/, "", msg)
@@ -40,17 +40,19 @@ function translate(msg) {
   return msg
 }
 {
-  date = $1
+  datetime = $1
   hash = $2
   msg = $3
   msg = translate(msg)
-  if (date != prev_date) {
+  # 날짜 부분(YYYY/MM/DD)만 추출하여 그룹핑
+  date_part = substr(datetime, 1, 10)
+  if (date_part != prev_date) {
     if (prev_date != "") print ""
-    print "## " date
+    print "## " date_part
     print ""
-    prev_date = date
+    prev_date = date_part
   }
-  print "- [`" hash "`] " msg
+  print "- [`" hash "`] " datetime " " msg
 }' > "$CONTENT_FILE"
 
 # 마커 사이의 내용을 교체
