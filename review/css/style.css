@@ -165,6 +165,15 @@ header {
   word-break: keep-all;
 }
 
+/* === 리뷰 안내 문구 === */
+.review-guide {
+  text-align: center;
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 12px;
+  word-break: keep-all;
+}
+
 /* === 남은 횟수 === */
 .quota-text {
   text-align: center;
