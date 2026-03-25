@@ -37,6 +37,68 @@ header {
   margin-bottom: 0;
 }
 
+/* === 이용 순서 안내 (리뷰 카드 위) === */
+.guide-callout {
+  margin-bottom: 20px;
+  padding: 18px 18px 16px;
+  background: linear-gradient(135deg, #f0f7ff 0%, #e8f4fc 100%);
+  border: 1px solid #cfe2f5;
+  border-radius: 14px;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset;
+}
+
+.guide-callout-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #143a5c;
+  margin: 0 0 14px;
+  letter-spacing: -0.3px;
+  text-align: center;
+}
+
+.guide-steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: guide-step;
+}
+
+.guide-steps li {
+  position: relative;
+  margin: 0 0 10px;
+  padding: 10px 12px 10px 44px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #1f2933;
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 10px;
+  border: 1px solid rgba(207, 226, 245, 0.9);
+  word-break: keep-all;
+}
+
+.guide-steps li:last-child {
+  margin-bottom: 0;
+}
+
+.guide-steps li::before {
+  counter-increment: guide-step;
+  content: counter(guide-step);
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 26px;
+  height: 26px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 26px;
+  text-align: center;
+  color: #fff;
+  background: #2563eb;
+  border-radius: 8px;
+}
+
 /* === 리뷰 카드 === */
 .review-card {
   background: #fff;
@@ -72,7 +134,10 @@ header {
   font-size: 16px;
   line-height: 1.85;
   color: #222;
-  word-break: keep-all;
+  /* keep-all은 공백 없는 긴 구간에서 줄바꿈이 막혀 잘릴 수 있음 */
+  word-break: normal;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
   letter-spacing: -0.2px;
 }
 
@@ -175,13 +240,6 @@ header {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* === 안내 === */
-.guide-text {
-  font-size: 14px;
-  color: #999;
-  line-height: 1.6;
-}
-
 /* === 리뷰 페이드인 === */
 .review-content.fade-in {
   animation: reviewFadeIn 0.4s ease;
@@ -208,6 +266,20 @@ header {
 
   .review-content {
     font-size: 15px;
+  }
+
+  .guide-callout {
+    padding: 16px 14px 14px;
+  }
+
+  .guide-callout-title {
+    font-size: 15px;
+    margin-bottom: 12px;
+  }
+
+  .guide-steps li {
+    font-size: 15px;
+    padding-left: 42px;
   }
 
   .btn-area .btn {

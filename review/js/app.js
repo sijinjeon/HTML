@@ -51,6 +51,15 @@ async function callGeminiAPI(prompt) {
 
 let currentReview = '';
 
+/** API 출력에서 **·유니코드 이모지 제거 (프롬프트 위반 보정) */
+function sanitizeReviewText(text) {
+  if (!text) return text;
+  let s = text.replace(/\*{1,2}/g, '');
+  s = s.replace(/\p{Extended_Pictographic}/gu, '');
+  s = s.replace(/\uFE0F|\u200D/g, '');
+  return s.trim();
+}
+
 async function generateReview() {
   const loading = document.getElementById('loading');
   const content = document.getElementById('review-content');
@@ -90,7 +99,7 @@ async function generateReview() {
       throw new Error('리뷰 텍스트를 받지 못했습니다.');
     }
 
-    currentReview = reviewText;
+    currentReview = sanitizeReviewText(reviewText);
 
     // 리뷰 표시
     loading.style.display = 'none';

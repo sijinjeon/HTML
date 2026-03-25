@@ -6,6 +6,10 @@
 <!-- AUTO-GENERATED: CHANGELOG_START -->
 ## 2026/03/25
 
+- 리뷰 텍스트 줄바꿈 수정: word-break/overflow-wrap/white-space 개선으로 카드 안에서 잘리지 않도록 처리
+- 이용 순서 안내를 하단 footer에서 리뷰 카드 위로 이동, 파란 콜아웃 카드 UI로 가독성 향상
+- 프롬프트에서 마크다운(**) 및 유니코드 이모지 금지, 한국식 텍스트 이모티콘(ㅋㅋ, ㅠㅠ)만 1회 허용
+- sanitizeReviewText 함수 추가: API 응답에서 ** 및 이모지 자동 제거
 - [`700d02a`] 2026/03/25 11:33 추가: favicon
 - [`4659f65`] 2026/03/25 11:33 Merge branch 'master' of https://github.com/sijinjeon/HTML
 - [`d58418f`] 2026/03/25 11:32 문서: CHANGELOG.md 자동 업데이트
