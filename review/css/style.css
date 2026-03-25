@@ -55,15 +55,15 @@ header {
 }
 
 .review-text {
-  min-height: 120px;
+  min-height: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .review-content {
-  font-size: 16px;
-  line-height: 1.7;
+  font-size: 17px;
+  line-height: 1.8;
   color: #333;
   word-break: keep-all;
 }
