@@ -6,54 +6,55 @@
 <!-- AUTO-GENERATED: CHANGELOG_START -->
 ## 2026/03/25
 
-- 2026/03/25 11:11 [`02cc7f5`] 문서: CHANGELOG.md 자동 업데이트
-- 2026/03/25 11:11 [`d02de84`] Redeploy
-- 2026/03/25 11:10 [`64d62f9`] 문서: CHANGELOG.md 자동 업데이트
-- 2026/03/25 11:10 [`c8af4e7`] Trigger deploy with new project API key
-- 2026/03/25 11:05 [`4f646a3`] 문서: CHANGELOG.md 자동 업데이트
-- 2026/03/25 11:05 [`2752874`] Trigger deploy with updated secret
-- 2026/03/25 01:40 [`78c166b`] 문서: CHANGELOG.md 자동 업데이트
-- 2026/03/25 01:40 [`513d367`] Trigger deploy with new project API key
-- 2026/03/25 01:35 [`b4ca9bb`] 문서: CHANGELOG.md 자동 업데이트
-- 2026/03/25 01:35 [`1cba369`] Trigger deploy with new API key
-- 2026/03/25 01:33 [`1dee236`] 문서: CHANGELOG.md 자동 업데이트
-- 2026/03/25 01:33 [`090bfd5`] Trigger deploy
-- 2026/03/25 01:30 [`0e0dca3`] 문서: CHANGELOG.md 자동 업데이트
-- 2026/03/25 01:30 [`7c5cfc6`] 제거: undefined updateLoadingText call
-- 2026/03/25 01:28 [`6990be9`] 문서: CHANGELOG.md 자동 업데이트
-- 2026/03/25 01:28 [`c8b7993`] 제거: retry logic to prevent quota waste, 1 request per action
-- 2026/03/25 01:18 [`d646370`] 문서: CHANGELOG.md 자동 업데이트
-- 2026/03/25 01:18 [`736b580`] Clean up auto-generated README and remove unused script
-- 2026/03/25 01:16 [`c312811`] 문서: CHANGELOG.md 자동 업데이트
-- 2026/03/25 01:16 [`f91da46`] Simplify retry logic and show wait message on 429 errors
-- 2026/03/25 01:14 [`e08f983`] 문서: CHANGELOG.md 자동 업데이트
-- 2026/03/25 01:14 [`37e59e6`] 추가: retry logic and fallback model for 429 rate limit errors
-- 2026/03/25 01:11 [`ca3dd1b`] 문서: CHANGELOG.md 자동 업데이트
-- 2026/03/25 01:11 [`128bd0b`] 추가: error detail display for debugging API failures
-- 2026/03/25 01:08 [`603aac3`] 문서: 자동 업데이트 README.md
-- 2026/03/25 01:08 [`fc59821`] 문서: 자동 업데이트 README.md
-- 2026/03/25 01:08 [`26c2f05`] 문서: CHANGELOG.md 자동 업데이트
-- 2026/03/25 01:08 [`a52ea6c`] 업데이트: scripts for changelog and readme automation
-- 2026/03/25 01:08 [`acf3b3a`] 문서: CHANGELOG.md 자동 업데이트
-- 2026/03/25 01:06 [`2e5eedb`] 문서: 자동 업데이트 README.md
-- 2026/03/25 01:06 [`abe7147`] 문서: 자동 업데이트 CHANGELOG.md
-- 2026/03/25 01:06 [`d9acc90`] 문서: 자동 업데이트 CHANGELOG.md
-- 2026/03/25 01:06 [`4ff42d9`] 추가: GitHub Actions deploy workflow and update review generator
-- 2026/03/25 00:40 [`f5c4cff`] 풀 리퀘스트 병합 #1 from sijinjeon/claude/plan-restaurant-reviews-R1ppv
+- [`bd238ac`] 2026/03/25 11:15 문서: CHANGELOG.md 자동 업데이트
+- [`02cc7f5`] 2026/03/25 11:11 문서: CHANGELOG.md 자동 업데이트
+- [`d02de84`] 2026/03/25 11:11 Redeploy
+- [`64d62f9`] 2026/03/25 11:10 문서: CHANGELOG.md 자동 업데이트
+- [`c8af4e7`] 2026/03/25 11:10 Trigger deploy with new project API key
+- [`4f646a3`] 2026/03/25 11:05 문서: CHANGELOG.md 자동 업데이트
+- [`2752874`] 2026/03/25 11:05 Trigger deploy with updated secret
+- [`78c166b`] 2026/03/25 01:40 문서: CHANGELOG.md 자동 업데이트
+- [`513d367`] 2026/03/25 01:40 Trigger deploy with new project API key
+- [`b4ca9bb`] 2026/03/25 01:35 문서: CHANGELOG.md 자동 업데이트
+- [`1cba369`] 2026/03/25 01:35 Trigger deploy with new API key
+- [`1dee236`] 2026/03/25 01:33 문서: CHANGELOG.md 자동 업데이트
+- [`090bfd5`] 2026/03/25 01:33 Trigger deploy
+- [`0e0dca3`] 2026/03/25 01:30 문서: CHANGELOG.md 자동 업데이트
+- [`7c5cfc6`] 2026/03/25 01:30 제거: undefined updateLoadingText call
+- [`6990be9`] 2026/03/25 01:28 문서: CHANGELOG.md 자동 업데이트
+- [`c8b7993`] 2026/03/25 01:28 제거: retry logic to prevent quota waste, 1 request per action
+- [`d646370`] 2026/03/25 01:18 문서: CHANGELOG.md 자동 업데이트
+- [`736b580`] 2026/03/25 01:18 Clean up auto-generated README and remove unused script
+- [`c312811`] 2026/03/25 01:16 문서: CHANGELOG.md 자동 업데이트
+- [`f91da46`] 2026/03/25 01:16 Simplify retry logic and show wait message on 429 errors
+- [`e08f983`] 2026/03/25 01:14 문서: CHANGELOG.md 자동 업데이트
+- [`37e59e6`] 2026/03/25 01:14 추가: retry logic and fallback model for 429 rate limit errors
+- [`ca3dd1b`] 2026/03/25 01:11 문서: CHANGELOG.md 자동 업데이트
+- [`128bd0b`] 2026/03/25 01:11 추가: error detail display for debugging API failures
+- [`603aac3`] 2026/03/25 01:08 문서: 자동 업데이트 README.md
+- [`fc59821`] 2026/03/25 01:08 문서: 자동 업데이트 README.md
+- [`26c2f05`] 2026/03/25 01:08 문서: CHANGELOG.md 자동 업데이트
+- [`a52ea6c`] 2026/03/25 01:08 업데이트: scripts for changelog and readme automation
+- [`acf3b3a`] 2026/03/25 01:08 문서: CHANGELOG.md 자동 업데이트
+- [`2e5eedb`] 2026/03/25 01:06 문서: 자동 업데이트 README.md
+- [`abe7147`] 2026/03/25 01:06 문서: 자동 업데이트 CHANGELOG.md
+- [`d9acc90`] 2026/03/25 01:06 문서: 자동 업데이트 CHANGELOG.md
+- [`4ff42d9`] 2026/03/25 01:06 추가: GitHub Actions deploy workflow and update review generator
+- [`f5c4cff`] 2026/03/25 00:40 풀 리퀘스트 병합 #1 from sijinjeon/claude/plan-restaurant-reviews-R1ppv
 
 ## 2026/03/24
 
-- 2026/03/24 15:18 [`f112774`] 추가: restaurant review generator page for 강설옥 설렁탕
+- [`f112774`] 2026/03/24 15:18 추가: restaurant review generator page for 강설옥 설렁탕
 
 ## 2020/05/30
 
-- 2020/05/30 17:48 [`5009d9a`] ver1
-- 2020/05/30 15:59 [`7c29c6d`] 추가: files via upload
+- [`5009d9a`] 2020/05/30 17:48 ver1
+- [`7c29c6d`] 2020/05/30 15:59 추가: files via upload
 
 ## 2020/05/16
 
-- 2020/05/16 01:49 [`7310ff7`] 추가: files via upload
-- 2020/05/16 01:49 [`c4e90b0`] 추가: files via upload
-- 2020/05/16 01:48 [`8bd3c57`] 추가: files via upload
-- 2020/05/16 01:45 [`81067af`] 초기 커밋
+- [`7310ff7`] 2020/05/16 01:49 추가: files via upload
+- [`c4e90b0`] 2020/05/16 01:49 추가: files via upload
+- [`8bd3c57`] 2020/05/16 01:48 추가: files via upload
+- [`81067af`] 2020/05/16 01:45 초기 커밋
 <!-- AUTO-GENERATED: CHANGELOG_END -->
