@@ -126,10 +126,15 @@ header {
   text-align: center;
 }
 
+.loading-spinner .spinner-border {
+  animation: spinner-border 0.45s linear infinite;
+}
+
 .loading-text {
   font-size: 14px;
   color: #999;
   margin-top: 12px;
+  line-height: 1.5;
 }
 
 /* === 에러 === */
