@@ -41,12 +41,18 @@ function buildPersonaText(persona) {
   return `${persona.age} ${persona.gender} / 성격: ${persona.traits}`;
 }
 
+function getSelectedMenus() {
+  const checked = document.querySelectorAll('input[name="menu"]:checked');
+  return Array.from(checked).map((el) => el.value);
+}
+
 function buildPromptFromTemplate(template) {
   const selectedKeywords = pickRandom(CONFIG.RESTAURANT.keywords || [], 3 + Math.floor(Math.random() * 3));
   const keywordsList = selectedKeywords.map((k) => `- ${k}`).join('\n');
 
   const regionList = pickRandom(CONFIG.RESTAURANT.region || [], 2).map((r) => `- ${r}`).join('\n');
-  const foodList = pickRandom(CONFIG.RESTAURANT.menus || [], 2).map((m) => `- ${m}`).join('\n');
+  const selectedMenus = getSelectedMenus();
+  const foodList = selectedMenus.map((m) => `- ${m}`).join('\n');
 
   const persona = PERSONAS[Math.floor(Math.random() * PERSONAS.length)];
   const personaText = buildPersonaText(persona);
@@ -63,7 +69,7 @@ function buildPromptFromTemplate(template) {
     .replace(/\{\{RESTAURANT_NAME\}\}/g, CONFIG.RESTAURANT.name)
     .replace(/\{\{RESTAURANT_ADDRESS\}\}/g, CONFIG.RESTAURANT.address)
     .replace(/\{\{STATION_AREA\}\}/g, CONFIG.RESTAURANT.stationArea)
-    .replace(/\{\{MENUS\}\}/g, CONFIG.RESTAURANT.menus.join(', '))
+    .replace(/\{\{MENUS\}\}/g, selectedMenus.join(', '))
     .replace(/\{\{REGION_LIST\}\}/g, regionList)
     .replace(/\{\{FOOD_LIST\}\}/g, foodList)
     .replace(/\{\{KEYWORDS_LIST\}\}/g, keywordsList);
@@ -153,6 +159,14 @@ function resetProgress() {
 }
 
 async function generateReview() {
+  const menuWarning = document.getElementById('menu-warning');
+  const selectedMenus = getSelectedMenus();
+  if (selectedMenus.length === 0) {
+    menuWarning.style.display = 'block';
+    return;
+  }
+  menuWarning.style.display = 'none';
+
   if (sessionCount >= SESSION_MAX) {
     updateQuotaUI();
     return;
@@ -160,6 +174,11 @@ async function generateReview() {
 
   sessionCount++;
   updateQuotaUI();
+
+  // 리뷰 영역 표시
+  document.getElementById('review-card').style.display = '';
+  document.getElementById('review-guide').style.display = '';
+  document.getElementById('btn-area').style.display = '';
 
   const loading = document.getElementById('loading');
   const content = document.getElementById('review-content');
@@ -246,18 +265,7 @@ async function copyReview() {
   }, 2000);
 }
 
-// 페이지 로드 시 리뷰 생성
+// 페이지 로드 시 메뉴 선택 대기
 document.addEventListener('DOMContentLoaded', () => {
-  const SAMPLE = '주말에 친구랑 같이 갔는데 역시 설렁탕 맛집이라 줄이 좀 있었어요. 근데 회전이 빨라서 금방 앉았고, 설렁탕 국물이 진짜 뽀얗고 진해서 한 숟갈 먹자마자 감탄했어요. 고기도 푸짐하게 들어있고 밥 말아서 깍두기랑 먹으니까 완벽 조합이었어요. 사장님이 반찬도 더 갖다주시고 친절하셔서 기분 좋게 먹었습니다. 특히 깍두기가 직접 담근 건지 아삭하고 시원해서 국물이랑 같이 먹으면 진짜 환상이에요. 수육도 추가로 시켰는데 살짝 두툼하게 썰어주셔서 식감이 좋았고 새우젓에 찍어 먹으니까 고소함이 배가 되더라고요. 양도 둘이서 먹기에 충분했어요. 가격도 이 동네 치고 착해서 자주 올 것 같고, 주차도 건물 뒤에 가능해서 차 가져오기도 편했어요. 다음엔 부모님 모시고 와야겠어요 ㅎㅎ';
-  if (new URLSearchParams(location.search).has('sample')) {
-    const content = document.getElementById('review-content');
-    const loading = document.getElementById('loading');
-    loading.style.display = 'none';
-    content.textContent = SAMPLE;
-    content.style.display = 'block';
-    content.classList.add('fade-in');
-    currentReview = SAMPLE;
-  } else {
-    generateReview();
-  }
+  updateQuotaUI();
 });
